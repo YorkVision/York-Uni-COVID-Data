@@ -16,11 +16,14 @@ if [ "$data" != "$olddata" ]; then
 
     branch="auto-$date"
     # Test if the branch exists
+    set +e
     git rev-parse --verify "$branch" > /dev/null 2>&1
     if [ $? -eq 0 ]; then
+        set -e
         echo "Warning: $branch already exists"
         git checkout "$branch"
     else
+        set -3
         git checkout -b "$branch"
     fi
 
