@@ -8,8 +8,7 @@ branch="auto-$date"
 
 # Check out today's branch if one exists, otherwise master
 set +e
-git rev-parse --verify "$branch" > /dev/null 2>&1
-if [ $? -eq 0 ]; then
+if git rev-parse --verify "$branch" > /dev/null 2>&1; then
     set -e
     git checkout "$branch"
 else
@@ -24,7 +23,7 @@ curl -s https://coronavirus.york.ac.uk \
 | head -n2 \
 | paste -sd, \
 )
-olddata=$(cat york-uni-covid.csv | tail -n1 | cut -d ',' -f 2-)
+olddata=$(tail -n1 york-uni-covid.csv | cut -d ',' -f 2-)
 
 if [ "$data" != "$olddata" ]; then
     # we have a new record
@@ -32,8 +31,7 @@ if [ "$data" != "$olddata" ]; then
 
     # Test if the branch exists
     set +e
-    git rev-parse --verify "$branch" > /dev/null 2>&1
-    if [ $? -eq 0 ]; then
+    if git rev-parse --verify "$branch" > /dev/null 2>&1; then
         set -e
         echo "Warning: $branch already exists"
         git checkout "$branch"
