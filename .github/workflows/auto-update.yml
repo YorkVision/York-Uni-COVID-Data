@@ -34,9 +34,12 @@ jobs:
         run: git config user.name "GitHub Actions" && git config user.email "actions@users.noreply.github.com"
 
       - name: Debug
-        run: ls $GOPATH/bin
+        run: |
+          export GOPATH=$(go env GOPATH)
+          ls $GOPATH/bin
 
       - name: Run updater
         run: |
+          export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
           ./update.sh
