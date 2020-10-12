@@ -9,7 +9,7 @@ branch="auto-$date"
 echo "Starting."
 # Check out today's branch if one exists, otherwise master
 
-if git rev-parse --verify "$branch" > /dev/null 2>&1; then
+if [ -z $(git ls-remote --heads origin $branch) ]; then
     git checkout "$branch"
 else
     git checkout master
@@ -33,7 +33,7 @@ if [ "$data" != "$olddata" ]; then
     echo "$date,$data" >> york-uni-covid.csv
 
     # Test if the branch exists
-    if git rev-parse --verify "$branch" > /dev/null 2>&1; then
+    if [ -z $(git ls-remote --heads origin $branch) ]; then
         echo "Warning: $branch already exists"
         git checkout "$branch"
     else
