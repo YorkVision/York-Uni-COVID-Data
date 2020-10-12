@@ -20,6 +20,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Install pup
+        run: go get github.com/ericchiang/pup
+      
+      - name: Set up Git
+        run: git config user.name "GitHub Actions" && git config user.email "actions@users.noreply.github.com"
+
       # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: Run updater
         run: ./update.sh

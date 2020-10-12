@@ -7,12 +7,14 @@ date=$(date +%Y-%m-%d)
 branch="auto-$date"
 
 # Check out today's branch if one exists, otherwise master
-if git rev-parse --verify "$branch" > /dev/null 2>&1; then
-    git checkout "$branch"
-else
-    git checkout master
+if [ -z "$GITHUB_ACTIONS" ]; then
+    if git rev-parse --verify "$branch" > /dev/null 2>&1; then
+        git checkout "$branch"
+    else
+        git checkout master
+    fi
+    git pull
 fi
-git pull
 
 olddata=$(tail -n1 york-uni-covid.csv | cut -d ',' -f 2-)
 
@@ -41,4 +43,6 @@ if [ "$data" != "$olddata" ]; then
     gh pr create --head "$branch" --title "Add UoY data for $date" --reviewer $REVIEWER --body "This PR is automatically generated."
 fi
 
-git checkout master
+if [ -z "$GITHUB_ACTIONS" ]; then
+    git checkout master
+fi
