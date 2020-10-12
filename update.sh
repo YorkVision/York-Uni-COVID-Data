@@ -1,6 +1,11 @@
 #!/bin/bash
 set -euo pipefail
 
+REVIEWER="markspolakovs"
+
+git checkout master
+git pull
+
 data=$(\
 curl -s https://coronavirus.york.ac.uk \
 | pup ':parent-of(:parent-of(div:contains("Current confirmed cases"))) strong text{}' \
@@ -30,5 +35,5 @@ if [ "$data" != "$olddata" ]; then
     git add york-uni-covid.csv
     git commit -m "Add data for $date"
     git push origin "$branch"
-    gh pr create --head --title "Add UoY date for $date" --reviewers markspolakovs --body "This PR is automatically generated."
+    gh pr create --head "$branch" --title "Add UoY date for $date" --reviewer $REVIEWER --body "This PR is automatically generated."
 fi
