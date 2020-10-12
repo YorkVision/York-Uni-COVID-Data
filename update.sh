@@ -24,7 +24,6 @@ if [ "$data" != "$olddata" ]; then
         git checkout -b "$branch"
     fi
 
-    git checkout -b "$branch"
     git add york-uni-covid.csv
     git commit -m "Add data for $date"
     git push origin "$branch"
