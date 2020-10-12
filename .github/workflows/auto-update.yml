@@ -19,9 +19,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Install pup
+        run: go get github.com/ericchiang/pup
+      
+      - name: Set up Git
+        run: git config user.name "GitHub Actions" && git config user.email "actions@users.noreply.github.com"
+
+      - name: Debug
+        run: ls $GOPATH/bin
+
       - name: Run updater
         run: |
-          git config user.name "GitHub Actions" && git config user.email "actions@users.noreply.github.com"
-          go get github.com/ericchiang/pup
           export PATH=$PATH:$GOPATH/bin
           ./update.sh
