@@ -7,12 +7,9 @@ date=$(date +%Y-%m-%d)
 branch="auto-$date"
 
 # Check out today's branch if one exists, otherwise master
-set +e
 if git rev-parse --verify "$branch" > /dev/null 2>&1; then
-    set -e
     git checkout "$branch"
 else
-    set -e
     git checkout master
 fi
 git pull
@@ -30,13 +27,10 @@ if [ "$data" != "$olddata" ]; then
     echo "$date,$data" >> york-uni-covid.csv
 
     # Test if the branch exists
-    set +e
     if git rev-parse --verify "$branch" > /dev/null 2>&1; then
-        set -e
         echo "Warning: $branch already exists"
         git checkout "$branch"
     else
-        set -e
         git checkout -b "$branch"
     fi
 
