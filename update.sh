@@ -23,7 +23,7 @@ if [ "$data" != "$olddata" ]; then
         echo "Warning: $branch already exists"
         git checkout "$branch"
     else
-        set -3
+        set -e
         git checkout -b "$branch"
     fi
 
