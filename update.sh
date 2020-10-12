@@ -9,11 +9,12 @@ branch="auto-$date"
 echo "Starting."
 # Check out today's branch if one exists, otherwise master
 
-if [ -z $(git ls-remote --heads origin $branch) ]; then
-    git checkout "$branch"
-else
+set +e
+git checkout "$branch"
+if [ $? -ne 0 ]; then
     git checkout master
 fi
+set -e
 if [ -z "$GITHUB_ACTIONS" ]; then
     git pull
 fi
@@ -33,12 +34,12 @@ if [ "$data" != "$olddata" ]; then
     echo "$date,$data" >> york-uni-covid.csv
 
     # Test if the branch exists
-    if [ -z $(git ls-remote --heads origin $branch) ]; then
-        echo "Warning: $branch already exists"
-        git checkout "$branch"
-    else
+    set +e
+    git checkout "$branch"
+    if [ $? -ne 0 ]; then
         git checkout -b "$branch"
     fi
+    set -e
 
     git add york-uni-covid.csv
     git commit -m "Add data for $date"
