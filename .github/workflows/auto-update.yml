@@ -28,4 +28,6 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run updater
-        run: ./update.sh
+        run: |
+          export PATH=$PATH:$GOPATH/bin
+          ./update.sh
