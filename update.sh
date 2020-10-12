@@ -6,6 +6,7 @@ REVIEWER="markspolakovs"
 date=$(date +%Y-%m-%d)
 branch="auto-$date"
 
+echo "Starting."
 # Check out today's branch if one exists, otherwise master
 
 if git rev-parse --verify "$branch" > /dev/null 2>&1; then
@@ -28,6 +29,7 @@ data=$(\
 
 if [ "$data" != "$olddata" ]; then
     # we have a new record
+    echo "Found new data: $data"
     echo "$date,$data" >> york-uni-covid.csv
 
     # Test if the branch exists
