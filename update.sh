@@ -7,12 +7,13 @@ date=$(date +%Y-%m-%d)
 branch="auto-$date"
 
 # Check out today's branch if one exists, otherwise master
+
+if git rev-parse --verify "$branch" > /dev/null 2>&1; then
+    git checkout "$branch"
+else
+    git checkout master
+fi
 if [ -z "$GITHUB_ACTIONS" ]; then
-    if git rev-parse --verify "$branch" > /dev/null 2>&1; then
-        git checkout "$branch"
-    else
-        git checkout master
-    fi
     git pull
 fi
 
