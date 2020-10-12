@@ -39,6 +39,8 @@ jobs:
           ls $GOPATH/bin
 
       - name: Run updater
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           export GOPATH=$(go env GOPATH)
           export PATH=$PATH:$GOPATH/bin
