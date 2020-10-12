@@ -3,7 +3,17 @@ set -euo pipefail
 
 REVIEWER="markspolakovs"
 
-git checkout master
+date=$(date +%Y-%m-%d)
+branch="auto-$date"
+
+# Check out today's branch if one exists, otherwise master
+set +e
+git rev-parse --verify "$branch" > /dev/null 2>&1
+if [ $? -eq 0 ]; then
+    git checkout "$branch"
+else
+    git checkout master
+fi
 git pull
 
 data=$(\
@@ -16,10 +26,8 @@ olddata=$(cat york-uni-covid.csv | tail -n1 | cut -d ',' -f 2-)
 
 if [ "$data" != "$olddata" ]; then
     # we have a new record
-    date=$(date +%Y-%m-%d)
     echo "$date,$data" >> york-uni-covid.csv
 
-    branch="auto-$date"
     # Test if the branch exists
     set +e
     git rev-parse --verify "$branch" > /dev/null 2>&1
@@ -37,3 +45,5 @@ if [ "$data" != "$olddata" ]; then
     git push origin "$branch"
     gh pr create --head "$branch" --title "Add UoY date for $date" --reviewer $REVIEWER --body "This PR is automatically generated."
 fi
+
+git checkout master
