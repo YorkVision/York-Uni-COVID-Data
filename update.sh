@@ -37,7 +37,7 @@ if [ "$data" != "$olddata" ]; then
     git add york-uni-covid.csv
     git commit -m "Add data for $date"
     git push -u origin "$branch"
-    gh pr create --head "$branch" --title "Add UoY date for $date" --reviewer $REVIEWER --body "This PR is automatically generated."
+    gh pr create --head "$branch" --title "Add UoY data for $date" --reviewer $REVIEWER --body "This PR is automatically generated."
 fi
 
 git checkout master
