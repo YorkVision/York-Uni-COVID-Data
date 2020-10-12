@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 data=$(\
 curl -s https://coronavirus.york.ac.uk \
@@ -16,13 +17,13 @@ if [ "$data" != "$olddata" ]; then
     branch="auto-$date"
     # Test if the branch exists
     git rev-parse --verify "$branch" > /dev/null 2>&1
-    if $?; then
+    if [ $? -eq 0 ]; then
         echo "Warning: $branch already exists"
         git checkout "$branch"
     else
-        git checkoug -b "$branch"
+        git checkout -b "$branch"
     fi
-    
+
     git checkout -b "$branch"
     git add york-uni-covid.csv
     git commit -m "Add data for $date"
