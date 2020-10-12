@@ -10,8 +10,10 @@ branch="auto-$date"
 set +e
 git rev-parse --verify "$branch" > /dev/null 2>&1
 if [ $? -eq 0 ]; then
+    set -e
     git checkout "$branch"
 else
+    set -e
     git checkout master
 fi
 git pull
@@ -42,7 +44,7 @@ if [ "$data" != "$olddata" ]; then
 
     git add york-uni-covid.csv
     git commit -m "Add data for $date"
-    git push origin "$branch"
+    git push -u origin "$branch"
     gh pr create --head "$branch" --title "Add UoY date for $date" --reviewer $REVIEWER --body "This PR is automatically generated."
 fi
 
