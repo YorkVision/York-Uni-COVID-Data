@@ -1,4 +1,4 @@
-# York Uni COVID Data
+# York Uni COVID-19 Data
 
 This repository contains the data the COVID-19 graphs on the homepage of the [York Vision website](https://yorkvision.co.uk), as well as the code to semi-automatically update them.
 
