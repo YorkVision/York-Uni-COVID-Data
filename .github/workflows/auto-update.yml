@@ -11,7 +11,7 @@ on:
   schedule:
     - cron: '0 9-15 * * *'
     - cron: '*/5 16-18 * * *'
-    - cron: '*/20 19-21 * * *'
+    - cron: '*/30 19-21 * * *'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
