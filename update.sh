@@ -25,6 +25,9 @@ data=$(\
     curl -s https://coronavirus.york.ac.uk \
     | pup ':parent-of(:parent-of(div:contains("Current confirmed cases"))) strong text{}' \
     | head -n2 \
+    | tr -s ' ' \
+    | sed 's/^ *//g' \
+    | sed 's/ *//g' \
     | paste -sd, \
 )
 
