@@ -27,7 +27,7 @@ data=$(
     | head -n2 \
     | tr -s ' ' \
     | sed 's/^ *//g' \
-    | sed 's/ *//g' \
+    | sed 's/ *$//g' \
     | paste -sd,
 )
 
